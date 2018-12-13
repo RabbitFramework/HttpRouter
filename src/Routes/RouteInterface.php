@@ -6,8 +6,7 @@
  * Time: 11:34
  */
 
-namespace Xirion\Http\Router\Routes;
-
+namespace Rabbit\Http\Router\Routes;
 
 interface RouteInterface
 {

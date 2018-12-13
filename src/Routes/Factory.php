@@ -6,12 +6,12 @@
  * Time: 11:32
  */
 
-namespace Xirion\Http\Router\Routes;
+namespace Rabbit\Http\Router\Routes;
 
 
-use Xirion\DependencyInjector\Container;
-use Xirion\Http\Router\Routes\Path\ClassPath;
-use Xirion\Http\Router\Routes\Path\FunctionPath;
+use Rabbit\DependencyInjector\Container;
+use Rabbit\Http\Router\Routes\Path\ClassPath;
+use Rabbit\Http\Router\Routes\Path\FunctionPath;
 
 class Factory
 {

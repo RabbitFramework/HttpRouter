@@ -6,12 +6,11 @@
  * Time: 08:38
  */
 
-namespace Xirion\Http\Router\Routes\Path;
+namespace Rabbit\Http\Router\Routes\Path;
 
-use Xirion\DependencyInjector\Container as DIContainer;
-use Xirion\DependencyInjector\Factory;
-use Xirion\Http\Router\Routes\Injections\ClassExceptionsInjection;
-use Xirion\Http\Router\Routes\RouteInterface;
+use Rabbit\DependencyInjector\DependencyContainer;
+use Rabbit\Http\Router\Routes\Injections\ClassExceptionsInjection;
+use Rabbit\Http\Router\Routes\RouteInterface;
 
 final class ClassPath implements RouteInterface
 {
@@ -38,15 +37,14 @@ final class ClassPath implements RouteInterface
      * @param $class
      * @param string $method
      * @throws \ReflectionException
-     * @throws \Xirion\Bags\Exceptions\BagException
-     * @throws \Xirion\Bags\Exceptions\BagNotFoundException
      */
-    public function __construct($class, string $method)
+    public function __construct(string $path, $class, string $method)
     {
-        $this->_class = DIContainer::getInstance()->getClass($class);
+        $this->_class = DependencyContainer::getInstance()->get($class)->getInstance();
         $this->_classMethod = $method;
         $this->_reflectionClass = new \ReflectionClass($class);
-        $this->_class->routerParameter = DIContainer::getInstance()->getClass(ClassExceptionsInjection::class, ['reflectionClass' => $this->_reflectionClass]);
+        $this->path = $path;
+        $this->_class->routerParameter = DependencyContainer::getInstance()->get(ClassExceptionsInjection::class)->getInstance(['reflectionClass' => $this->_reflectionClass]);
     }
 
     /**

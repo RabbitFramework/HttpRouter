@@ -6,7 +6,7 @@
  * Time: 14:21
  */
 
-namespace Xirion\Http\Router\Routes\Injections;
+namespace Rabbit\Http\Router\Routes\Injections;
 
 
 interface ExceptionsInjectionInterface

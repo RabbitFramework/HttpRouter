@@ -6,45 +6,44 @@
  * Time: 08:38
  */
 
-namespace Xirion\Http\Router\Routes\Path;
+namespace Rabbit\Http\Router\Routes\Path;
 
-use Xirion\DependencyInjector\Container;
-use Xirion\Http\Router\Routes\Injections\FunctionExceptionsInjection;
-use Xirion\Http\Router\Routes\RouteInterface;
+use Rabbit\DependencyInjector\DependencyContainer;
+use Rabbit\Http\Router\Routes\Injections\FunctionExceptionsInjection;
+use Rabbit\Http\Router\Routes\RouteInterface;
 
 final class FunctionPath implements RouteInterface
 {
 
     use PathTrait;
 
-    private $_method;
+    private $_function;
 
-    private $_reflectionMethod;
+    private $_reflectionFunction;
 
-    private $routerParameter;
+    private $_routerParameter;
 
     /**
      * ClassPath constructor.
-     * @param $class
-     * @param string $method
+     * @param string $path
+     * @param $function
      * @throws \ReflectionException
-     * @throws \Xirion\Bags\Exceptions\BagException
-     * @throws \Xirion\Bags\Exceptions\BagNotFoundException
      */
-    public function __construct($method)
+    public function __construct(string $path, $function)
     {
-        $this->_method = $method;
-        $this->_reflectionMethod = new \ReflectionFunction($method);
-        $this->routerParameter = Container::getInstance()->getClass(FunctionExceptionsInjection::class, ['reflectionMethod' => $this->_reflectionMethod]);
+        $this->path = $path;
+        $this->_function = $function;
+        $this->_reflectionFunction = new \ReflectionFunction($function);
+        $this->_routerParameter = DependencyContainer::getInstance()->get(FunctionExceptionsInjection::class)->getInstance(['reflectionMethod' => $this->_reflectionFunction]);
     }
 
     /**
      *
      */
     public function call() {
-        $this->_matches[] = &$this->routerParameter;
-        call_user_func_array($this->_method, $this->_matches);
-        $this->routerParameter->parseExceptions($this->_matches);
+        $this->_matches[] = &$this->_routerParameter;
+        call_user_func_array($this->_function, $this->_matches);
+        $this->_routerParameter->parseExceptions($this->_matches);
     }
 
 }

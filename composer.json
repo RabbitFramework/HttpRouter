@@ -1,18 +1,18 @@
 {
-    "name": "xirion/http-router",
+    "name": "rabbitphp/http-router",
     "require": {
-        "xirion/dependency-injector": "*",
-        "xirion/http-header": "*"
+        "rabbitphp/dependency-injector": "*"
     },
     "authors": [
         {
-            "name": "Kakktuss",
-            "email": "benjaminmanderveldepro@gmail.com"
+            "name": "Kaktus",
+            "email": "kaktus@rabbitphp.com"
         }
     ],
     "autoload": {
         "psr-4": {
-            "Xirion\\Http\\Router\\": "src"
+            "Rabbit\\Http\\Router\\": "src",
+            "Rabbit\\Http\\Router\\Routes\\": "src/Routes"
         }
     }
 }

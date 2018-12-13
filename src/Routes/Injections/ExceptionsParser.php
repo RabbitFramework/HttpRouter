@@ -6,7 +6,7 @@
  * Time: 11:17
  */
 
-namespace Xirion\Http\Router\Routes\Injections;
+namespace Rabbit\Http\Router\Routes\Injections;
 
 final class ExceptionsParser implements ExceptionsParserInterface
 {

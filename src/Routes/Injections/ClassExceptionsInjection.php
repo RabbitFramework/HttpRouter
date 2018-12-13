@@ -6,9 +6,9 @@
  * Time: 08:42
  */
 
-namespace Xirion\Http\Router\Routes\Injections;
+namespace Rabbit\Http\Router\Routes\Injections;
 
-use Xirion\DependencyInjector\Container;
+use Rabbit\DependencyInjector\DependencyContainer;
 
 final class ClassExceptionsInjection implements ExceptionsInjectionInterface
 {
@@ -25,7 +25,7 @@ final class ClassExceptionsInjection implements ExceptionsInjectionInterface
 
     public function __construct(\ReflectionClass $reflectionClass) {
         $this->_reflectedClass = $reflectionClass;
-        $this->_exceptionsParser = Container::getInstance()->getClass(ExceptionsParser::class);
+        $this->_exceptionsParser = DependencyContainer::getInstance()->get(ExceptionsParser::class)->getInstance();
     }
 
     public function exceptDate(string $variableName) {

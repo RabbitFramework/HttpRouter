@@ -6,7 +6,7 @@
  * Time: 11:33
  */
 
-namespace Xirion\Http\Router\Routes\Injections;
+namespace Rabbit\Http\Router\Routes\Injections;
 
 
 class ParserExceptions extends \Exception

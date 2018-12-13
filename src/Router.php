@@ -6,10 +6,9 @@
  * Time: 22:13
  */
 
-namespace Xirion\Http\Router;
+namespace Rabbit\Http\Router;
 
-use Xirion\Http\Header\Response as HeaderResponse;
-use Xirion\Http\Router\Routes\RouteInterface;
+use Rabbit\Http\Router\Routes\RouteInterface;
 
 class Router
 {
@@ -32,32 +31,32 @@ class Router
         return self::$_instance;
     }
 
+    protected function __construct()
+    {
+    }
+
     public function setUrl($url = '') {
         $this->url = $url;
     }
 
-    public function get(string $path, RouteInterface $route) {
-        $route->setPath($path);
+    public function get(RouteInterface $route) {
+
         return $this->add($route, 'GET');
     }
 
-    public function post(string $path, RouteInterface $route) {
-        $route->setPath($path);
+    public function post(RouteInterface $route) {
         return $this->add($route, 'POST');
     }
 
-    public function put(string $path, RouteInterface $route) {
-        $route->setPath($path);
+    public function put(RouteInterface $route) {
         return $this->add($route, 'PUT');
     }
 
-    public function patch(string $path, RouteInterface $route) {
-        $route->setPath($path);
+    public function patch(RouteInterface $route) {
         return $this->add($route, 'PATCH');
     }
 
-    public function delete(string $path, RouteInterface $route) {
-        $route->setPath($path);
+    public function delete(RouteInterface $route) {
         return $this->add($route, 'DELETE');
     }
 
@@ -81,10 +80,10 @@ class Router
 
     public function run($url = '') {
         if(isset($this->url) || isset($url)) {
-            if(!isset($this->routes[HeaderResponse::getRequestMethod()])) {
-
-            }
-            foreach ($this->_routes[HeaderResponse::getRequestMethod()] as $route) {
+//            if(empty($this->routes[$_SERVER['REQUEST_METHOD']])) {
+//                return;
+//            }
+            foreach ($this->_routes[$_SERVER['REQUEST_METHOD']] as $route) {
                 $route->setUrl($this->url ?? $url);
                 if($route->matchAll()) {
                     $route->call();
