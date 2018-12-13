@@ -8,6 +8,8 @@
 
 namespace Rabbit\Http\Router;
 
+use Rabbit\DependencyInjector\DependencyContainer;
+use Rabbit\Http\Router\Routes\Path\ClassPath;
 use Rabbit\Http\Router\Routes\RouteInterface;
 
 class Router
@@ -58,6 +60,41 @@ class Router
 
     public function delete(RouteInterface $route) {
         return $this->add($route, 'DELETE');
+    }
+
+    public function ressource(string $path, string $class) {
+        $methods = get_class_methods($class);
+        foreach ($methods as $method) {
+            $method = DependencyContainer::getInstance()->get($class)->getMethod($method)->getInformation();
+            switch ($method->name) {
+                case 'index':
+                    $this->get(new ClassPath($path.'/', $class, $method->name));
+                    break;
+                case 'show':
+                    foreach ($method->parameters as $parameter) {
+                        $path .= '/:'.$parameter->name;
+                    }
+                    $this->get(new ClassPath($path, $class, $method->name));
+                    break;
+                case 'store':
+                    $this->post(new ClassPath($path, $class, $method->name));
+                    break;
+                case 'update':
+                    foreach ($method->parameters as $parameter) {
+                        $path .= '/:'.$parameter->name;
+                    }
+                    $path = new ClassPath($path, $class, $method->name);
+                    $this->put($path);
+                    $this->patch($path);
+                    break;
+                case 'destroy':
+                    foreach ($method->parameters as $parameter) {
+                        $path .= '/:'.$parameter->name;
+                    }
+                    $this->delete(new ClassPath($path, $class, $method->name));
+                    break;
+            }
+        }
     }
 
     public function getRoute(string $name, string $method) {

@@ -1,7 +1,8 @@
 {
     "name": "rabbitphp/http-router",
     "require": {
-        "rabbitphp/dependency-injector": "*"
+        "rabbitphp/dependency-injector": "*",
+        "rabbitphp/file": "*"
     },
     "authors": [
         {
