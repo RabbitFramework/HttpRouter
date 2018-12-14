@@ -8,8 +8,7 @@
 
 namespace Rabbit\Http\Router\Routes\Injections;
 
-
-use Rabbit\DependencyInjector\DependencyContainer;
+use Rabbit\DependencyContainer\DependencyContainer;
 
 final class FunctionExceptionsInjection implements ExceptionsInjectionInterface
 {

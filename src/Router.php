@@ -8,7 +8,7 @@
 
 namespace Rabbit\Http\Router;
 
-use Rabbit\DependencyInjector\DependencyContainer;
+use Rabbit\DependencyContainer\DependencyContainer;
 use Rabbit\Http\Router\Routes\Path\ClassPath;
 use Rabbit\Http\Router\Routes\RouteInterface;
 
