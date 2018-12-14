@@ -22,7 +22,7 @@ class AssetPath implements RouteInterface
     public function __construct(string $path, string $assetPath)
     {
         $this->assetPath = $assetPath;
-        $this->path = $path;
+        $this->setPath($path);
     }
 
     public function call() {

@@ -31,10 +31,10 @@ final class FunctionPath implements RouteInterface
      */
     public function __construct(string $path, $function)
     {
-        $this->path = $path;
         $this->_function = $function;
         $this->_reflectionFunction = new \ReflectionFunction($function);
         $this->_routerParameter = DependencyContainer::getInstance()->get(FunctionExceptionsInjection::class)->getInstance(['reflectionMethod' => $this->_reflectionFunction]);
+        $this->setPath($path);
     }
 
     /**

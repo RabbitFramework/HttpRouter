@@ -43,8 +43,8 @@ final class ClassPath implements RouteInterface
         $this->_class = DependencyContainer::getInstance()->get($class)->getInstance();
         $this->_classMethod = $method;
         $this->_reflectionClass = new \ReflectionClass($class);
-        $this->path = $path;
         $this->_class->routerParameter = DependencyContainer::getInstance()->get(ClassExceptionsInjection::class)->getInstance(['reflectionClass' => $this->_reflectionClass]);
+        $this->setPath($path);
     }
 
     /**
