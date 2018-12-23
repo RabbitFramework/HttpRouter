@@ -20,6 +20,8 @@ final class ClassPath implements RouteInterface
     /**
      * @var object
      */
+    private $_className;
+
     private $_class;
 
     /**
@@ -40,10 +42,8 @@ final class ClassPath implements RouteInterface
      */
     public function __construct(string $path, $class, string $method)
     {
-        $this->_class = DependencyContainer::getInstance()->get($class)->getInstance();
+        $this->_className = $class;
         $this->_classMethod = $method;
-        $this->_reflectionClass = new \ReflectionClass($class);
-        $this->_class->routerParameter = DependencyContainer::getInstance()->get(ClassExceptionsInjection::class)->getInstance(['reflectionClass' => $this->_reflectionClass]);
         $this->setPath($path);
     }
 
@@ -51,6 +51,8 @@ final class ClassPath implements RouteInterface
      *
      */
     public function call() {
+        $this->_class = DependencyContainer::getInstance()->get($this->_className)->getInstance();
+        $this->_class->routerParameter = DependencyContainer::getInstance()->get(ClassExceptionsInjection::class)->getInstance(['reflectionClass' => new \ReflectionClass($this->_className)]);
         call_user_func_array([$this->_class, $this->_classMethod], $this->_matches);
         $this->_class->routerParameter->parseExceptions($this->_matches);
     }

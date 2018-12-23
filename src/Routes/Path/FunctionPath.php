@@ -32,8 +32,6 @@ final class FunctionPath implements RouteInterface
     public function __construct(string $path, $function)
     {
         $this->_function = $function;
-        $this->_reflectionFunction = new \ReflectionFunction($function);
-        $this->_routerParameter = DependencyContainer::getInstance()->get(FunctionExceptionsInjection::class)->getInstance(['reflectionMethod' => $this->_reflectionFunction]);
         $this->setPath($path);
     }
 
@@ -41,6 +39,8 @@ final class FunctionPath implements RouteInterface
      *
      */
     public function call() {
+        $this->_reflectionFunction = new \ReflectionFunction($this->_function);
+        $this->_routerParameter = DependencyContainer::getInstance()->get(FunctionExceptionsInjection::class)->getInstance(['reflectionMethod' => $this->_reflectionFunction]);
         $this->_matches[] = &$this->_routerParameter;
         call_user_func_array($this->_function, $this->_matches);
         $this->_routerParameter->parseExceptions($this->_matches);
